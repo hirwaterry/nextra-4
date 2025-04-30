@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Hero from "./components/Hero";
-import Text from "./components/Text"
+
 
 export const metadata: Metadata = {
   title: "BoDx",
