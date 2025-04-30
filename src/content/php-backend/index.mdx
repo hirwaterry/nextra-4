@@ -1,0 +1,323 @@
+import { Callout } from 'nextra/components'
+import Image from 'next/image'
+
+# Crud app using React+PHP and MySQL
+
+<Callout emoji="📅">
+ on 28/04/2025
+</Callout>
+
+## What we've covered today is about:
+
+- **Relational Databases like MySQL**
+- **Non-Relational databases like MongoDB**
+
+## Relational Databases (MySQL)
+
+### XAMPP: Cross Apache MySQL PHP Perl
+
+XAMPP is a free and open-source cross-platform web server solution stack package, primarily consisting of:
+- Apache HTTP Server
+- MySQL database
+- PHP interpreter
+- Perl interpreter
+
+## Activity 1
+
+Create a database using MySQL called school with a table name `users`
+
+<Image src="/1.png" alt="user" width={600} height={500} />
+
+The structure looks as follows:
+
+<Image src="/2.png" alt="user" width={600} height={500} />
+
+## How to create a foreign key:
+
+Foreign Key is a field in one table that refers to the primary key in another table. It is used to establish relationships between tables in a relational database.
+
+## Activity 2
+
+Create a `school` folder in `htdocs`. We are going to build the backend to perform CRUD operations on the system.
+
+The folder structure looks as shown below:
+
+- Schools/
+  - users.php
+  - add.php
+  - edit.php
+  - delete.php
+
+```bash
+
+    htdocs/
+     ├── School/
+       ├── users/
+          ├── connect.php
+          ├── users.php
+          ├── add_user.php
+          ├── update_user.php
+          ├── delete_user.php
+          ├── login.php
+```
+
+
+
+
+## Key Terms:
+
+<Callout>
+**JSON**: JavaScript Object Notation - A lightweight data interchange format
+
+**XML**: Extensible Markup Language - A markup language that defines rules for encoding documents
+</Callout>
+
+## We first create the file for connecting to the database
+
+### connect.php
+
+```php
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "school";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+echo "Connected successfully";
+?>
+```
+
+[IMAGE: Database Connection Code]
+
+## Then we start creating the add.php file
+
+### add.php
+
+```php
+<?php
+include 'connect.php';
+
+if(isset($_POST['submit'])) {
+  $username = $_POST['username'];
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+
+  $sql = "INSERT INTO users (username, email, password) 
+          VALUES ('$username', '$email', '$password')";
+  
+  if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+    header('location:users.php');
+  } else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+  }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add User</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container my-5">
+    <form method="post">
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" class="form-control" name="username" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" class="form-control" name="email" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" name="password" autocomplete="off">
+      </div>
+      <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
+```
+
+[IMAGE: Add User Form]
+
+## Creating the users.php File
+
+The `users.php` file will display all the users from our database and provide options to edit or delete them.
+
+```php
+<?php
+include 'connect.php';
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User List</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container my-5">
+    <button class="btn btn-primary"><a href="add.php" class="text-light">Add User</a></button>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Username</th>
+          <th scope="col">Email</th>
+          <th scope="col">Operations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        $sql = "SELECT * FROM users";
+        $result = mysqli_query($conn, $sql);
+        if($result) {
+          while($row = mysqli_fetch_assoc($result)) {
+            $id = $row['id'];
+            $username = $row['username'];
+            $email = $row['email'];
+            echo '<tr>
+              <th scope="row">'.$id.'</th>
+              <td>'.$username.'</td>
+              <td>'.$email.'</td>
+              <td>
+                <button class="btn btn-primary"><a href="edit.php?editid='.$id.'" class="text-light">Edit</a></button>
+                <button class="btn btn-danger"><a href="delete.php?deleteid='.$id.'" class="text-light">Delete</a></button>
+              </td>
+            </tr>';
+          }
+        }
+        ?>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
+```
+
+## Creating the edit.php File
+
+The `edit.php` file allows us to update existing user information:
+
+```php
+<?php
+include 'connect.php';
+
+$id = $_GET['editid'];
+$sql = "SELECT * FROM users WHERE id=$id";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$username = $row['username'];
+$email = $row['email'];
+$password = $row['password'];
+
+if(isset($_POST['submit'])) {
+  $username = $_POST['username'];
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+
+  $sql = "UPDATE users SET username='$username', email='$email', password='$password' WHERE id=$id";
+  $result = mysqli_query($conn, $sql);
+  if($result) {
+    header('location:users.php');
+  } else {
+    die(mysqli_error($conn));
+  }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit User</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container my-5">
+    <form method="post">
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" class="form-control" name="username" value="<?php echo $username; ?>" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" class="form-control" name="email" value="<?php echo $email; ?>" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="text" class="form-control" name="password" value="<?php echo $password; ?>" autocomplete="off">
+      </div>
+      <button type="submit" class="btn btn-primary" name="submit">Update</button>
+    </form>
+  </div>
+</body>
+</html>
+```
+
+## Creating the delete.php File
+
+The `delete.php` file handles the deletion of users:
+
+```php
+<?php
+include 'connect.php';
+
+if(isset($_GET['deleteid'])) {
+  $id = $_GET['deleteid'];
+  
+  $sql = "DELETE FROM users WHERE id=$id";
+  $result = mysqli_query($conn, $sql);
+  if($result) {
+    header('location:users.php');
+  } else {
+    die(mysqli_error($conn));
+  }
+}
+?>
+```
+
+## Working with Foreign Keys in MySQL
+
+To create a foreign key in MySQL, you can use the following syntax when creating a table:
+
+```sql
+CREATE TABLE orders (
+  order_id INT PRIMARY KEY,
+  user_id INT,
+  order_date DATE,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+```
+
+Or you can add a foreign key to an existing table:
+
+```sql
+ALTER TABLE orders
+ADD FOREIGN KEY (user_id) REFERENCES users(id);
+```
+
+## Summary
+
+In this lesson, we've learned:
+
+1. How to set up a MySQL database using XAMPP
+2. Creating tables with proper structure
+3. Setting up a PHP project structure for CRUD operations
+4. Connecting to a MySQL database using PHP
+5. Implementing create, read, update, and delete operations
+6. Working with foreign keys for table relationships
+
+<Callout emoji="📘">
+In our next lesson, we'll explore Non-Relational databases like MongoDB and how they differ from relational databases like MySQL.
+</Callout>

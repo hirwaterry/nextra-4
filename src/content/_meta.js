@@ -4,6 +4,9 @@ const meta = {
   features: "",
   themes: "",
   advanced: "",
+  express: "",
+  "php-backend": "",
+  "stock-management": "",
 };
 
 export default meta;

@@ -1,0 +1,123 @@
+import { Steps } from 'nextra/components'
+import Image from 'next/image'
+
+# Get Started
+
+## Quick Start with express
+
+
+Nextra works like a Next.js plugin, and it accepts a theme config (layout) to
+render the page. To start: [^3]
+
+<Steps>
+### Initialize Express project,
+
+1. create folder using **file** **explorer**
+  - You first create a folder in your computer, Example: `express-app`
+  - Then open the `express-app` folder in the terminal 
+  <Image src="/openf.png" alt="Open folder" width={300} height={300} />
+
+2. Create folder using **Terminal** 
+  - Open terminal, Example: `Cmd`
+
+  ```bash filename="cmd"
+    mkdir express-app
+  ```
+
+  - Change into the newly created directory
+
+  ```bash filename="cmd"
+    cd express-app
+  ```
+ 
+3.  To Initialize a `package.json` file run this command in cmd
+
+  ```bash filename="cmd"
+      npm init -y
+  ```
+  - That should generate a file named `package.json`
+
+### Install Express 
+
+- Install Express as a dependency using npm:
+
+```bash filename="cmd"
+   npm install express
+```
+
+
+### Create a javascript file, Example `index.js`
+
+After initialisation of the express project and installing the express.js library, You'll need to make a new file in the `express-app` folder for starting creating endpoints.
+
+The `express-app` folder structure should look like this:
+
+# Folder Structure :
+---
+```bash
+express-api/
+├── node_modules/
+├── index.js
+├── package.json
+├── package-lock.json
+```
+> [!NOTE]
+>
+> Files in the `express-app/` folder (`node_modules`, `package.json`, `package-lock.json`) are auto-generated with `npm commands` we mentioned above. Make sure the files are arranged as we provided the folder structure. If you do try to make these files on your own they might not properly work as they are supposed to
+> [here](/themes/docs/configuration).
+
+### Running a simple web server in Express JS
+
+In index.js write some codes to run a server in express
+
+- **require('express')**: Imports the Express module.
+- **const app = express()**: Creates an Express application instance, which serves as the foundation for building your web application.
+- **app.listen(port, callback)**: Starts the server and listens for requests on the specified port.
+
+- **callback**: An optional function that is called when the server starts successfully.
+
+```js filename="index.js"
+const express = require('express');
+const app = express();
+
+const port = 3000; 
+
+
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
+
+```
+
+### Create a script for running `index.js` as the server
+
+```json filename="package.json" {7}
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index.js",
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+  }
+}
+```
+
+
+### You are good to go! Run `npm run server` to start the express server
+
+``` bash filename="cmd"
+npm run server
+```
+</Steps>
+
+---
+
+<span id="sidebar-and-anchor-links" />

@@ -1,0 +1,143 @@
+import { Callout, Steps } from 'nextra/components'
+
+# Project Setup
+**Setting up the backend environment**
+
+<Callout emoji="💡">
+  This guide will walk you through setting up a Node.js backend for a stock management system. Make sure you have Node.js and npm installed before proceeding.
+</Callout>
+
+<Steps>
+### Initialize a Node.js Project
+
+First, open your terminal and create a new directory for your project. Run the following commands:
+
+```bash
+mkdir stock-management
+cd stock-management
+
+mkdir backend
+cd backend
+
+npm init -y
+```
+
+The **`npm init -y`** command will initialize a new Node.js project in the backend folder. 
+This will automatically generate a **package.json** file, which holds all the configuration and dependency details for your project.
+
+### Install Dependencies
+
+Now, let's install the necessary dependencies for your backend. In your terminal, run the following command to install the required packages:
+
+```bash
+npm install express mongoose cors dotenv bcrypt express-session
+npm install nodemon --save-dev
+```
+
+<Callout type="info">
+  **Explanation of Dependencies:**
+
+  - **express**: A web framework for Node.js that helps you handle routing and middleware.
+  - **mongoose**: An Object Data Modeling (ODM) library for MongoDB, making it easier to interact with your database.
+  - **cors**: A middleware that allows your app to handle Cross-Origin Resource Sharing (CORS) requests, useful for API calls from different domains.
+  - **dotenv**: A module that loads environment variables from a .env file, allowing you to keep sensitive data like your database URI and secret keys outside the code.
+  - **bcrypt**: A library for securely hashing and comparing passwords.
+  - **express-session**: Middleware to handle session data for user authentication.
+  - **nodemon**: A development tool that automatically restarts your app when changes are made to the files.
+</Callout>
+
+Once installed, these dependencies will appear in your package.json file.
+
+### Create the Necessary Folders and Files
+
+Next, create the folder structure for your project and initialize the essential files. In your terminal, run the following commands:
+
+```bash
+mkdir models routes
+touch index.js .env
+```
+
+This will create the following structure:
+
+- **models/**: This folder will contain all Mongoose schema files that define the structure for your database models (like items, stock-in, stock-out, etc.).
+- **routes/**: This folder will store Express route handlers for different API endpoints (e.g., authentication, items, stock management).
+- **index.js**: The entry point of your application, where the Express app and MongoDB connection are configured.
+- **.env**: A file to store environment variables like the MongoDB URI and session secret key.
+
+### Set Up Environment Variables
+
+Now, let's set up the environment variables that your app will use. Open the .env file you just created and define the following variables:
+
+```ini filename=".env"
+MONGO_URI=mongodb://localhost:27017/stockms
+SESSION_SECRET=yourSecretKey
+```
+
+<Callout type="info">
+  **Explanation of Environment Variables:**
+
+  - **PORT**: The port on which your server will run. You can change it to any available port, but the default is 4000.
+  - **MONGO_URI**: This is the MongoDB connection string, which tells your app how to connect to your database. In this case, it's connecting to a local MongoDB instance on the default port.
+  - **SESSION_SECRET**: A secret key used by express-session to sign session cookies. Change this to a unique string for your project.
+</Callout>
+
+### Nodemon Configuration for Development
+
+To make your development process smoother, let's configure nodemon to automatically restart the server when any file changes. Open your package.json file and add the following script under the "scripts" section:
+
+```json filename="package.json" {7}
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js" // for using nodemon for auto restart server when changes detected
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "mongoose": "^8.13.2"
+  }
+}
+```
+
+This allows you to run your app in development mode using the following command:
+
+```bash
+npm run dev
+```
+
+This command will start the server and automatically restart it whenever changes are made to the project files.
+</Steps>
+
+## Troubleshooting Tips
+
+<Callout emoji="⚠️" type="warning">
+  **Common Issues You Might Encounter**
+</Callout>
+
+- **MongooseServerSelectionError**: If you get this error, ensure that MongoDB is running locally. You can start MongoDB with the following command:
+
+```bash
+mongod
+```
+
+- **Cannot GET /**: If you encounter this error, make sure your Express app is initialized correctly in index.js and that you have routes set up.
+
+With these steps completed, you're all set to start building out your backend functionality. The next step is to define your routes and models to handle stock management operations.
+
+## Next Steps
+
+1. Define Models
+2. Set Up Routes
+
+<Callout emoji="🔍">
+  You can check out the Models and Routes documentation next to learn how to implement the core functionality of your stock management system.
+</Callout>

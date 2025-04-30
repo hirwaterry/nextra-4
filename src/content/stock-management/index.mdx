@@ -1,0 +1,63 @@
+
+# Introduction
+## Overview of the backend setup
+
+
+### Welcome to the **Backend Documentation** for the Stock Management System.
+
+This system powers stock tracking for institutions like schools. It includes:
+- User authentication
+- Item management
+- Stock-in and stock-out logic
+- Remaining stock calculation
+- MongoDB integration with Mongoose
+- Session-based authentication
+
+This guide assumes you have **Node.js**, **npm**, and **MongoDB** installed.
+
+## Folder Structure
+
+```bash
+backend/
+├── models/
+│   ├── item.js
+│   ├── stockin.js
+│   ├── stockout.js
+│   └── user.js
+├── routes/
+│   ├── auth.js
+│   ├── items.js
+│   ├── rem.js
+│   ├── stocks.js
+│   └── users.js
+├── .env
+├── index.js
+```
+
+### Explanation of the Folder Structure:
+
+**models/**: This directory contains the Mongoose schemas:
+- **item.js**: Defines the structure for stock items.
+- **stockin.js**: Handles the stock-in schema.
+- **stockout.js**: Handles the stock-out schema.
+- **user.js**: Manages user details (such as username and password).
+
+**routes/**: This directory contains Express route files:
+- **auth.js**: Handles user authentication routes.
+- **items.js**: Manages routes for item-related actions (adding, updating, deleting items).
+- **rem.js**: Deals with remaining stock calculations and queries.
+- **stocks.js**: Handles routes related to stock-in and stock-out processes.
+- **users.js**: Manages user management and routes for handling users.
+
+**.env**: This file stores environment variables such as the MongoDB connection URI and session secrets.
+
+**index.js**: The entry point of your application, where the Express server is set up and MongoDB is connected.
+
+By following this structure, you'll be able to set up the backend of the Stock Management System effectively. The next steps involve installing dependencies and configuring the environment.
+
+## Next Steps
+
+1. Install Dependencies
+2. Backend Routes
+
+This will guide you through setting up the backend, managing the stock data, and authenticating users. Let's get started!
