@@ -1,0 +1,44 @@
+import React from 'react';
+import Image from 'next/image';
+import Text from './Text';
+
+const Hero: React.FC = () => {
+  return (
+    <div className="bg-transparent container mx-auto px-20 pt-32  lg:pt-0 h-screen flex flex-col lg:flex-row items-center">
+      <div className="max-w-xl mx-auto px-4  sm:px-6 lg:px-8  text-center lg:text-left">
+        <Text />
+        <p className="text-lg  my-5">
+          Fast, user-friendly and engaging - turn HR into people and culture and streamline your daily operations with your own branded app.
+        </p>
+        
+        <div className="mt-8 flex flex-col items-center lg:items-start">
+          <span className="ml-2 ">Dive into Bodx — and start building.</span>
+        </div>
+        <div className="mt-12 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-12 justify-center lg:justify-start">
+          <div>
+            <p className="text-4xl font-bold ">75.2%</p>
+            <p className="">Average daily activity</p>
+          </div>
+          <div>
+            <p className="text-4xl font-bold ">~20k</p>
+            <p className="">Average daily users</p>
+          </div>
+        </div>
+      </div>
+      <div className=" w-full flex justify-center lg:justify-end items-center mt-8 lg:mt-0">
+        {/* SVG as Image */}
+        <Image
+
+          src="/screen-bg.png"
+          alt="Hero SVG"
+          width={1000}
+          height={800}
+          layout="intrinsic"
+          className="object-contain "
+        />
+      </div>
+    </div>
+  );
+};
+
+export default Hero;

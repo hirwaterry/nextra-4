@@ -1,22 +1,15 @@
 import { Metadata } from "next";
+import Hero from "./components/Hero";
+import Text from "./components/Text"
 
 export const metadata: Metadata = {
-  title: "Nextra 4",
-  description: "Nextra 4 is here.",
+  title: "BoDx",
+  description: "BoDx v1 is here.",
 };
 export default function Home() {
   return (
-    <div className="container flex items-center justify-center">
-      <h1
-        style={{
-          textAlign: "center",
-          fontSize: 64,
-          margin: "25vh 0",
-          fontWeight: "bold",
-        }}
-      >
-        Home page
-      </h1>
+    <div className="poppins">
+      <Hero />
     </div>
   );
 }

@@ -3,6 +3,7 @@ const meta = {
   express: "",
   "php-backend": "",
   "stock-management": "",
+  "business-org": ""
 };
 
 export default meta;

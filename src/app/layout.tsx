@@ -7,12 +7,12 @@ import "nextra-theme-docs/style.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Nextra 4",
-  description: "Nextra 4 is here.",
+  title: "BoDx",
+  description: "BoDx v1 is here.",
 };
 
-const banner = <Banner storageKey="some-key">Nextra 4.0 is released 🎉</Banner>;
-const footer = <Footer>MIT {new Date().getFullYear()} © Nextra.</Footer>;
+const banner = <Banner storageKey="some-key">BoDx 1.0 is released 🎉</Banner>;
+const footer = <Footer>Chop {new Date().getFullYear()} © BoDx.</Footer>;
 
 export default async function RootLayout({
   children,
@@ -27,8 +27,8 @@ export default async function RootLayout({
           banner={banner}
           navbar={
             <Navbar
-              logo={<h1 className="text-2xl"> Nextra</h1>}
-              projectLink="https://github.com/officialrajdeepsingh/nextra-4"
+              logo={<h1 className="text-2xl font-bold"> BoDx</h1>}
+              // projectLink="https://github.com/officialrajdeepsingh/nextra-4"
             />
           }
           pageMap={await getPageMap()}
